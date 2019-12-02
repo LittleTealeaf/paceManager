@@ -11,12 +11,15 @@ import classes.util;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -26,6 +29,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -341,8 +345,31 @@ public class fxMain extends Application {
 					Optional<ButtonType> result = alert.showAndWait();
 					if(result.get() != ButtonType.OK) { return; }
 				}
+
+				//Naming
+				Dialog<String> dialog = new Dialog<String>();
+				dialog.setTitle("New Pace");
+				dialog.setHeaderText("Please give a name");
+				
+				Text nameText = new Text("Name");
+				TextField nameField = new TextField();
+				
+				HBox hb = new HBox(nameText,nameField);
+				hb.setSpacing(10);
+				hb.setPadding(new Insets(10));
+				
+				dialog.getDialogPane().setContent(hb);
+				dialog.setResultConverter(r -> nameField.getText());
+				
+				ButtonType bComplete = new ButtonType("Create",ButtonData.OK_DONE);
+				ButtonType bCancel = new ButtonType("Cancel",ButtonData.CANCEL_CLOSE);
+				dialog.getDialogPane().getButtonTypes().addAll(bCancel,bComplete);
+				
+				String ret = dialog.showAndWait().get();
+				if(ret.contentEquals("")) return;
+				
+				Pace.newPace(ret);
 				fileManager.loadedFile = null;
-				Pace.newPace();
 				updateTable();
 			}
 		});

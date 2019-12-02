@@ -42,6 +42,7 @@ public class fileManager {
 	public static void saveAs() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save File");
+		fileChooser.setInitialFileName(Pace.title);
 		fileChooser.getExtensionFilters().add(new ExtensionFilter("Pace Files", "*.pace"));
 		fileSave(fileChooser.showSaveDialog(fxMain.sMRef));
 	}
