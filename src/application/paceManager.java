@@ -13,41 +13,43 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 public class paceManager {
-	
+
 	public static final String version = "0.1.1";
-	
+
 	private static final boolean development = false;
-	
+
 	public static void main(String[] args) {
-		
+
 		Pace.newPace();
-		
-		//Debug Only
+
+		// Debug Only
 		if(development) {
 			Pace.teams = importTeams.getTeams();
 			importTeams.randomizeTimes();
 			importTeams.importGoals();
 		}
-		
+
 		fxMain.open(args);
 	}
-	
+
 	/**
 	 * Gets team by it's name
+	 * 
 	 * @param tmName Team Identifier
 	 * @return Requested Team
 	 */
 	public static Team getTeam(String tmName) {
 		for(Team t : Pace.teams) {
-			String a = t.team.toLowerCase().replace(" ", "").replace("\n", "").replace("\r","");
-			String b = tmName.toLowerCase().replace(" ", "").replace("\n", "").replace("\r","");
+			String a = t.team.toLowerCase().replace(" ", "").replace("\n", "").replace("\r", "");
+			String b = tmName.toLowerCase().replace(" ", "").replace("\n", "").replace("\r", "");
 			if(a.contentEquals(b)) return t;
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Deletes specified team, alerts user if confirmation is enabled
+	 * 
 	 * @param t Team to delete
 	 */
 	public static void deleteTeam(Team t) {
@@ -61,9 +63,10 @@ public class paceManager {
 		Pace.teams.remove(t);
 		fxMain.updateTable();
 	}
-	
+
 	/**
 	 * Gets a list of teams in a division
+	 * 
 	 * @param division Division to access teams from
 	 * @return List of teams in the division
 	 */
@@ -76,7 +79,7 @@ public class paceManager {
 		}
 		return ret;
 	}
-	
+
 	public static void closeApplication() {
 		Stage[] stages = new Stage[] {fxMain.mNotes, fxPrint.sPrint, fxScores.sScores, fxSettings.sSettings, fxTeam.sTeam, fxGoals.sGoals, fxImport.sImport};
 		for(Stage s : stages) if(s != null && s.isShowing()) s.close();

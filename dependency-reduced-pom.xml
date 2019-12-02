@@ -4,7 +4,16 @@
   <groupId>Tealeaf</groupId>
   <artifactId>paceManager</artifactId>
   <name>Pace Manager</name>
-  <version>0.1.0-Beta</version>
+  <version>0.1.1</version>
+  <description>A manager for pace-run events.</description>
+  <url>https://github.com/LittleTealeaf/paceManager</url>
+  <issueManagement>
+    <url>https://github.com/LittleTealeaf/paceManager/issues/new/choose</url>
+  </issueManagement>
+  <organization>
+    <name>Tealeaf</name>
+    <url>https://github.com/LittleTealeaf</url>
+  </organization>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <resources>
@@ -13,6 +22,9 @@
         <excludes>
           <exclude>**/*.java</exclude>
         </excludes>
+      </resource>
+      <resource>
+        <directory>src/resources</directory>
       </resource>
     </resources>
     <plugins>
@@ -45,6 +57,18 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>com.zenjava</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>8.8.3</version>
+        <configuration>
+          <vendor>Tealeaf</vendor>
+          <mainClass>application.paceManager</mainClass>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
 </project>

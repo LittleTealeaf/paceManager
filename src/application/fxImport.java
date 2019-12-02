@@ -16,18 +16,17 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class fxImport {
-	
+
 	public static Stage sImport;
 	private static TextField tTeam;
 	private static TextField tData;
 	private static ChoiceBox<String> cMethod;
 	public static Label lData;
-	
+
 	/**
 	 * 0 Start, 1 End
 	 */
-	
-	
+
 	public static void open() {
 		if(sImport != null) sImport.close();
 		sImport = new Stage();
@@ -40,9 +39,9 @@ public class fxImport {
 				sImport.close();
 			}
 		});
-		
+
 		Label lTeam = new Label("Team");
-		
+
 		tTeam = new TextField();
 		tTeam.setEditable(true);
 		tTeam.setOnKeyPressed(keyEvent -> {
@@ -52,9 +51,9 @@ public class fxImport {
 				} else cMethod.requestFocus();
 			}
 		});
-		
+
 		Label lChoice = new Label("Import Option:");
-		
+
 		cMethod = new ChoiceBox<String>(FXCollections.observableArrayList("Start Time", "End Time"));
 		cMethod.getSelectionModel().selectedIndexProperty().addListener(obs -> {
 			if(cMethod.getSelectionModel().getSelectedIndex() != -1) {
@@ -69,7 +68,7 @@ public class fxImport {
 				}
 			}
 		});
-		
+
 		lData = new Label("");
 		lData.setTextFill(Color.RED);
 		tData = new TextField();
@@ -80,21 +79,21 @@ public class fxImport {
 				saveImport();
 			}
 		});
-		
-		VBox h1vb1 = new VBox(lTeam,tTeam);
-		VBox h1vb2 = new VBox(lChoice,cMethod);
-		VBox h1vb3 = new VBox(lData,tData);
-		
-		HBox hb = new HBox(h1vb1,h1vb2,h1vb3);
+
+		VBox h1vb1 = new VBox(lTeam, tTeam);
+		VBox h1vb2 = new VBox(lChoice, cMethod);
+		VBox h1vb3 = new VBox(lData, tData);
+
+		HBox hb = new HBox(h1vb1, h1vb2, h1vb3);
 		VBox vbMain = new VBox(hb);
 		Scene sc = new Scene(vbMain);
 		sImport.setScene(sc);
 		sImport.show();
 	}
-	
+
 	/**
-	 * Method to save the data put into the text fields according to the import method
-	 * Once it completes successfully, will clear fields
+	 * Method to save the data put into the text fields according to the import
+	 * method Once it completes successfully, will clear fields
 	 */
 	private static void saveImport() {
 		if(tTeam.getText() == "") {
@@ -105,7 +104,7 @@ public class fxImport {
 		Boolean isNew = t == null;
 		if(isNew) t = new Team(tTeam.getText());
 		Time v;
-		switch(cMethod.getSelectionModel().getSelectedIndex()) {
+		switch (cMethod.getSelectionModel().getSelectedIndex()) {
 		case 0:
 			v = new Time(tData.getText());
 			if(v.error == 0) t.start = v;

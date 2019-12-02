@@ -1,20 +1,24 @@
 package debugdev;
 
-import java.util.*;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
-import classes.*;
+import classes.Goal;
+import classes.Pace;
+import classes.Team;
+import classes.Time;
 
 public class importTeams {
-	
+
 	private static List<String> lines = new ArrayList<String>();
-	
+
 	public static List<Team> getTeams() {
 		List<Team> teams = new ArrayList<Team>();
 		Scanner scanner = null;
-		
+
 		if(lines.isEmpty()) updateDatabase();
-		
+
 		for(String line : lines) {
 			scanner = new Scanner(line);
 			Team a = new Team();
@@ -31,16 +35,16 @@ public class importTeams {
 				} else if(skip) {
 					skip = false;
 				} else {
-					name+=ch;
+					name += ch;
 				}
 			}
 			a.names.add(name);
 			name = "";
-			//Remove the first space of the name
+			// Remove the first space of the name
 			boolean swi = false;
 			for(char c : a.names.get(0).toCharArray()) {
-				if(swi) name+=c;
-				swi=true;
+				if(swi) name += c;
+				swi = true;
 			}
 			a.names.set(0, name);
 			teams.add(a);
@@ -49,7 +53,7 @@ public class importTeams {
 		teams.get(0).notes.add("NOT A AWEF");
 		return(teams);
 	}
-	
+
 	public static void importGoals() {
 		Time shortestTime = null;
 		Time longestTime = null;
@@ -61,16 +65,16 @@ public class importTeams {
 				longestTime = t.elapsed();
 			}
 		}
-		String[] divs = {"Pleasure","Hunt","Western","Junior"};
+		String[] divs = {"Pleasure", "Hunt", "Western", "Junior"};
 		for(String s : divs) {
 			Goal g = new Goal(s);
 			g.time = new Time((float) Math.random() * (longestTime.time - shortestTime.time) + shortestTime.time);
 			Pace.goals.add(g);
 		}
 	}
-	
+
 	public static void randomizeTimes() {
-		//Set Variables
+		// Set Variables
 		Time startRange = new Time("7:00:00");
 		Time endRange = new Time("13:00:00");
 		Time minElapsed = new Time("1:00:00");
@@ -82,9 +86,9 @@ public class importTeams {
 					a.finish = new Time((float) (Math.random() * (maxElapsed.time - minElapsed.time) + a.start.time));
 				}
 			}
-		}		
+		}
 	}
-	
+
 	private static void updateDatabase() {
 		lines = new ArrayList<String>();
 		lines.add("441	Pleasure Claudia Marcello, Courtney Strout");

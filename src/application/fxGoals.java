@@ -32,8 +32,8 @@ public class fxGoals {
 
 	public static Stage sGoals;
 	private static TableView<Goal> table;
-	
-	@SuppressWarnings("unchecked") //one unsolvable warning
+
+	@SuppressWarnings("unchecked") // one unsolvable warning
 	public static void open() {
 		if(sGoals != null) sGoals.close();
 		sGoals = new Stage();
@@ -47,21 +47,21 @@ public class fxGoals {
 		sGoals.setOnCloseRequest(event -> {
 			if(sgEdit != null && sgEdit.isShowing()) sgEdit.close();
 		});
-		
-		//Creating the Table
+
+		// Creating the Table
 		table = new TableView<Goal>();
 		table.setEditable(false);
 		table.prefWidthProperty().bind(sGoals.widthProperty());
-		
-		TableColumn<Goal,String> tDiv = new TableColumn<Goal,String>("Division");
-		tDiv.setCellValueFactory(new PropertyValueFactory<Goal,String>("division"));
+
+		TableColumn<Goal, String> tDiv = new TableColumn<Goal, String>("Division");
+		tDiv.setCellValueFactory(new PropertyValueFactory<Goal, String>("division"));
 		tDiv.setReorderable(false);
-		TableColumn<Goal,String> tGoal = new TableColumn<Goal,String>("Optimal Time");
-		tGoal.setCellValueFactory(new PropertyValueFactory<Goal,String>("displayTime"));
+		TableColumn<Goal, String> tGoal = new TableColumn<Goal, String>("Optimal Time");
+		tGoal.setCellValueFactory(new PropertyValueFactory<Goal, String>("displayTime"));
 		tGoal.setReorderable(false);
-		table.getColumns().addAll(tDiv,tGoal);
+		table.getColumns().addAll(tDiv, tGoal);
 		table.setOnMouseClicked(click -> {
-			if (click.getClickCount() == 2) {
+			if(click.getClickCount() == 2) {
 				try {
 					editDiv(table.getSelectionModel().getSelectedItem());
 				} catch(IndexOutOfBoundsException e) {}
@@ -74,11 +74,11 @@ public class fxGoals {
 				} catch(IndexOutOfBoundsException e) {}
 			}
 		});
-		
-		//Disable the horizontal scrollbar
+
+		// Disable the horizontal scrollbar
 		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-		
-		//Adding buttons to the bottom of the window
+
+		// Adding buttons to the bottom of the window
 		HBox hBottom = new HBox();
 		hBottom.setSpacing(10);
 		Button bCreate = new Button("New");
@@ -95,30 +95,30 @@ public class fxGoals {
 		});
 		Region botRegion = new Region();
 		HBox.setHgrow(botRegion, Priority.ALWAYS);
-		hBottom.getChildren().addAll(bCreate,bImport,botRegion,bClose);
+		hBottom.getChildren().addAll(bCreate, bImport, botRegion, bClose);
 		hBottom.setPadding(new Insets(5, 10, 5, 10));
-		
+
 		VBox vb = new VBox();
-		vb.getChildren().addAll(table,hBottom);
-		Scene sc = new Scene(vb,500,300);
+		vb.getChildren().addAll(table, hBottom);
+		Scene sc = new Scene(vb, 500, 300);
 		sGoals.setScene(sc);
 		resizeWindow();
 		sGoals.show();
 		updateTable();
 	}
-	
+
 	private static Stage sgEdit;
 	private static TextField teDiv;
 	private static TextField teTime;
 	private static Label leError;
-	
+
 	private static void editDiv(Goal g) {
 		if(sgEdit != null) sgEdit.close();
 		sgEdit = new Stage();
 		sgEdit.setAlwaysOnTop(true);
 		if(g == null) sgEdit.setTitle("Create Goal");
 		else sgEdit.setTitle("Edit Goal");
-		
+
 		teDiv = new TextField();
 		teDiv.setOnKeyPressed(keyEvent -> {
 			if(keyEvent.getCode() == KeyCode.ENTER) {
@@ -129,7 +129,7 @@ public class fxGoals {
 			}
 		});
 		Label leDiv = new Label("Division");
-		
+
 		teTime = new TextField();
 		teTime.setOnKeyPressed(keyEvent -> {
 			if(keyEvent.getCode() == KeyCode.ENTER) {
@@ -137,18 +137,18 @@ public class fxGoals {
 			}
 		});
 		Label leTime = new Label("Optimal Time");
-		
+
 		leError = new Label("");
 		leError.setTextFill(Color.RED);
-		
-		HBox v1h1 = new HBox(teDiv,leDiv);
+
+		HBox v1h1 = new HBox(teDiv, leDiv);
 		v1h1.setSpacing(10);
-		HBox v1h2 = new HBox(teTime,leTime);
+		HBox v1h2 = new HBox(teTime, leTime);
 		v1h2.setSpacing(10);
-		
-		VBox vb1 = new VBox(v1h1,v1h2,leError);
+
+		VBox vb1 = new VBox(v1h1, v1h2, leError);
 		vb1.setSpacing(10);
-		
+
 		Button bSave = new Button("Save");
 		bSave.setOnMouseClicked(click -> {
 			eSave(g);
@@ -157,16 +157,16 @@ public class fxGoals {
 		bCancel.setOnMouseClicked(click -> {
 			sgEdit.close();
 		});
-		
-		VBox vb2 = new VBox(bSave,new Label(""),bCancel);
+
+		VBox vb2 = new VBox(bSave, new Label(""), bCancel);
 		vb2.setSpacing(10);
-		
-		HBox hb = new HBox(vb1,vb2);
+
+		HBox hb = new HBox(vb1, vb2);
 		hb.setSpacing(20);
 		hb.setPadding(new Insets(15, 12, 15, 12));
-		
+
 		Scene sc = new Scene(hb);
-		
+
 		sgEdit.setScene(sc);
 		sgEdit.show();
 		if(g != null) {
@@ -175,11 +175,11 @@ public class fxGoals {
 			teTime.requestFocus();
 		} else teDiv.requestFocus();
 	}
-	
+
 	private static void eSave(Goal g) {
-		//Clears Error Message
+		// Clears Error Message
 		leError.setText("");
-		//Checks for any basic error
+		// Checks for any basic error
 		if(teDiv.getText() == "") {
 			leError.setText("Please include a division name");
 		} else {
@@ -197,7 +197,7 @@ public class fxGoals {
 				Goal v = new Goal(teDiv.getText());
 				if(t.error == 0) v.time = t;
 				for(Goal a : Pace.goals) if(a.division.toLowerCase().equals(v.division.toLowerCase())) {
-					//Confirmation message if 
+					// Confirmation message if
 					Alert conf = new Alert(AlertType.CONFIRMATION);
 					conf.setTitle("Divison Exists");
 					conf.setHeaderText("Would you like to update the existing division?");
@@ -214,34 +214,34 @@ public class fxGoals {
 			}
 		}
 	}
-	
+
 	private static void importDivs() {
-		//Popup
+		// Popup
 		Alert prompt = new Alert(AlertType.NONE);
 		prompt.setTitle("Import");
 		prompt.setHeaderText("Do you wish to remove unused goals?");
 		ButtonType bYes = new ButtonType("Yes");
 		ButtonType bNo = new ButtonType("No");
-		ButtonType bCancel = new ButtonType("Cancel",ButtonData.CANCEL_CLOSE);
-		prompt.getButtonTypes().addAll(bYes,bNo,bCancel);
-		
+		ButtonType bCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+		prompt.getButtonTypes().addAll(bYes, bNo, bCancel);
+
 		Optional<ButtonType> result = prompt.showAndWait();
 		boolean remove = false;
 		if(result.get() == bYes) remove = true;
-		//else if(result.get() == bNo) remove = false;
+		// else if(result.get() == bNo) remove = false;
 		else if(result.get() == bCancel) return;
-		
+
 		List<String> strDivs = new ArrayList<String>();
 		for(Team t : Pace.teams) if(!strDivs.contains(t.division)) strDivs.add(t.division);
 		List<Goal> goals = new ArrayList<Goal>();
 		if(Pace.goals != null) for(Goal g : Pace.goals) if(strDivs.remove(g.division)) goals.add(g);
 		for(String s : strDivs) goals.add(new Goal(s));
-		//Adds back remaining if set
+		// Adds back remaining if set
 		if(!remove) for(Goal g : Pace.goals) if(!goals.contains(g)) goals.add(g);
 		Pace.goals = goals;
 		updateTable();
 	}
-	
+
 	public static void deleteDiv(Goal g) {
 		if(Pace.settings.alertOnDeleteGoal) {
 			Alert conf = new Alert(AlertType.CONFIRMATION);
@@ -253,19 +253,20 @@ public class fxGoals {
 		Pace.goals.remove(g);
 		updateTable();
 	}
-	
+
 	private static void resizeWindow() {
 
-		table.getColumns().get(0).setPrefWidth(0.5*table.getWidth());
-		table.getColumns().get(1).setPrefWidth(0.5*table.getWidth()-5);
+		table.getColumns().get(0).setPrefWidth(0.5 * table.getWidth());
+		table.getColumns().get(1).setPrefWidth(0.5 * table.getWidth() - 5);
 	}
+
 	private static void updateTable() {
 		if(Pace.goals != null) {
 			table.getItems().clear();
 			table.getItems().addAll(Pace.goals);
 			table.sort();
 		}
-		//Updates fxScores
+		// Updates fxScores
 		fxScores.updateTabs();
 	}
 }

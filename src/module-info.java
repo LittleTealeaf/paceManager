@@ -1,7 +1,7 @@
 module paceManager {
 	exports application;
 	exports classes;
-	
+
 	opens classes to javafx.base;
 
 	requires javafx.base;
