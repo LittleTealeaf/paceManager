@@ -116,10 +116,8 @@ public class fxMain extends Application {
 		/*
 		 * How the following works: - Creates the Column TableColumn cTeamName = new
 		 * TableColumn("Team");
-		 * 
 		 * - Routs the column to the specified variable (using get____(); ) of Team
 		 * cTeamName.setCellValueFactory(new PropertyValueFactory<Team,String>("team"));
-		 * 
 		 * - Any of the custom variables to set cTeamName.setReorderable(false);
 		 */
 
@@ -346,28 +344,28 @@ public class fxMain extends Application {
 					if(result.get() != ButtonType.OK) { return; }
 				}
 
-				//Naming
+				// Naming
 				Dialog<String> dialog = new Dialog<String>();
 				dialog.setTitle("New Pace");
 				dialog.setHeaderText("Please give a name");
-				
+
 				Text nameText = new Text("Name");
 				TextField nameField = new TextField();
-				
-				HBox hb = new HBox(nameText,nameField);
+
+				HBox hb = new HBox(nameText, nameField);
 				hb.setSpacing(10);
 				hb.setPadding(new Insets(10));
-				
+
 				dialog.getDialogPane().setContent(hb);
 				dialog.setResultConverter(r -> nameField.getText());
-				
-				ButtonType bComplete = new ButtonType("Create",ButtonData.OK_DONE);
-				ButtonType bCancel = new ButtonType("Cancel",ButtonData.CANCEL_CLOSE);
-				dialog.getDialogPane().getButtonTypes().addAll(bCancel,bComplete);
-				
+
+				ButtonType bComplete = new ButtonType("Create", ButtonData.OK_DONE);
+				ButtonType bCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+				dialog.getDialogPane().getButtonTypes().addAll(bCancel, bComplete);
+
 				String ret = dialog.showAndWait().get();
 				if(ret.contentEquals("")) return;
-				
+
 				Pace.newPace(ret);
 				fileManager.loadedFile = null;
 				updateTable();

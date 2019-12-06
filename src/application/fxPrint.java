@@ -43,7 +43,6 @@ public class fxPrint {
 	/*
 	 * Documentation http://www.java2s.com/Code/Java/2D-Graphics-GUI/
 	 * PrintinJavapageformatanddocument.htm
-	 * 
 	 * printing tables
 	 * https://docs.oracle.com/javase/tutorial/uiswing/misc/printtable.html
 	 */
